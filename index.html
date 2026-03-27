@@ -246,32 +246,6 @@
     <div class="footer__copy">© 2026 Devika E S</div>
   </footer>
 
-  <script>
-    // Intersection Observer for .reveal elements
-    const revealEls = document.querySelectorAll('.reveal');
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('visible');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.12 });
-    revealEls.forEach(el => observer.observe(el));
-
-    // Animate skill bars when visible
-    const bars = document.querySelectorAll('.skill-bar__fill');
-    const barObserver = new IntersectionObserver((entries) => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.style.width = e.target.style.getPropertyValue('--w') ||
-            getComputedStyle(e.target).getPropertyValue('--w');
-          e.target.classList.add('animate');
-          barObserver.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.2 });
-    bars.forEach(b => barObserver.observe(b));
-  </script>
+  <script src="main.js"></script>
 </body>
 </html>

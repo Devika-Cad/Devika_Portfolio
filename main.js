@@ -159,27 +159,36 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 
 
-  // ---- 9. SECTION COUNT-UP ON SCROLL (for experience dates etc.) ----
-  // Counts up numbers inside .edu__year when scrolled into view
+  // ---- 9. YEAR RANGE COUNT-UP ANIMATION ----
+  // Counts up end year inside .edu__year when scrolled into view
+  // Handles both single years (e.g., "2025") and year ranges (e.g., "2021 — 2025")
   document.querySelectorAll('.edu__year').forEach(el => {
-    const text = el.textContent;
-    // Only trigger if it's a plain year (not a range)
-    const match = text.match(/^\d{4}$/);
-    if (!match) return;
-
-    const finalVal = parseInt(match[0]);
+    const text = el.textContent.trim();
+    
+    // Extract the final year (handles both "2025" and "2021 — 2025")
+    const yearMatch = text.match(/\d{4}(?=\D*$)/);
+    if (!yearMatch) return;
+    
+    const finalYear = parseInt(yearMatch[0]);
+    const startYear = finalYear - 4;
+    const prefix = text.substring(0, text.lastIndexOf(finalYear));
+    let currentYear = startYear;
     let started = false;
 
     const countObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting && !started) {
           started = true;
-          let start = finalVal - 4;
-          const step = () => {
-            el.textContent = start;
-            if (start < finalVal) { start++; setTimeout(step, 80); }
+          
+          const animateYear = () => {
+            el.textContent = prefix + currentYear;
+            if (currentYear < finalYear) {
+              currentYear++;
+              setTimeout(animateYear, 80);
+            }
           };
-          step();
+          
+          animateYear();
           countObserver.unobserve(el);
         }
       });
