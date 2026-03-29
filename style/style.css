@@ -528,10 +528,128 @@ a:hover { opacity: 0.72; }
   margin-bottom: 8px;
 }
 
+
+
 .cert__date {
   font-size: 11px;
   color: var(--accent);
   font-family: var(--font-mono);
+}
+
+/* =========================================
+   WORKS / DESIGN GALLERY
+   ========================================= */
+.works {
+  background: var(--bg);
+  max-width: none;
+  padding: var(--section-pad);
+}
+
+.works .section__label {
+  max-width: var(--max-w);
+  margin: 0 auto 56px;
+}
+
+.works__gallery {
+  max-width: var(--max-w);
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 32px;
+}
+
+.work__card {
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: border-color 0.3s, transform 0.3s;
+  display: flex;
+  flex-direction: column;
+}
+
+.work__card:hover {
+  border-color: var(--accent-line);
+  transform: translateY(-8px);
+}
+
+.work__image {
+  width: 100%;
+  height: 240px;
+  overflow: hidden;
+  background: var(--bg-3);
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+  transition: transform 0.4s ease;
+  background: linear-gradient(135deg, rgba(212,168,67,0.05), rgba(212,168,67,0.02));
+}
+
+.work__card:hover .work__image img {
+  transform: scale(1.08);
+}
+
+.work__info {
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+
+.work__title {
+  font-family: var(--font-serif);
+  font-size: 18px;
+  color: var(--text);
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.work__desc {
+  font-size: 12px;
+  color: var(--text-dim);
+  line-height: 1.6;
+  margin-bottom: 16px;
+  flex: 1;
+}
+
+.work__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.work__tags span {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--accent);
+  border: 1px solid var(--accent-line);
+  padding: 3px 8px;
+  background: var(--accent-dim);
+}
+
+/* Resume button styling */
+.resume-btn {
+  padding: 4px 10px;
+  border: 1px solid var(--accent-line);
+  border-radius: 2px;
+  font-size: 11px;
+  transition: all 0.2s;
+  background: rgba(212, 168, 67, 0.1);
+  display: inline-block;
+}
+
+.resume-btn:hover {
+  background: var(--accent-dim);
+  border-color: var(--accent);
+  opacity: 1 !important;
 }
 
 /* =========================================
