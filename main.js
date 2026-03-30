@@ -1,200 +1,360 @@
-/* =========================================
-   DEVIKA E S — PORTFOLIO JAVASCRIPT
-   ========================================= */
+/* =====================================================
+   DEVIKA E S - MECHANICAL DESIGN ENGINEER PORTFOLIO
+   Professional Interactive JavaScript
+   ===================================================== */
 
-document.addEventListener('DOMContentLoaded', () => {
-
-  // ---- 1. SCROLL REVEAL ----
-  // Animates elements with class .reveal when they enter the viewport
-  const revealEls = document.querySelectorAll('.reveal');
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        revealObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.12 });
-
-  revealEls.forEach(el => revealObserver.observe(el));
-
-
-  // ---- 2. SKILL BAR ANIMATION ----
-  // Fills skill bars with their defined --w CSS variable when scrolled into view
-  const bars = document.querySelectorAll('.skill-bar__fill');
-
-  const barObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const target = entry.target;
-        const width = target.style.getPropertyValue('--w') ||
-                      getComputedStyle(target).getPropertyValue('--w');
-        target.style.width = width;
-        target.classList.add('animate');
-        barObserver.unobserve(target);
-      }
-    });
-  }, { threshold: 0.2 });
-
-  bars.forEach(bar => barObserver.observe(bar));
-
-
-  // ---- 3. ACTIVE NAV HIGHLIGHT (optional nav) ----
-  // If a nav is added later, this highlights the active section link
-  const sections = document.querySelectorAll('section[id]');
-  const navLinks = document.querySelectorAll('nav a[href^="#"]');
-
-  if (navLinks.length > 0) {
-    const sectionObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          navLinks.forEach(link => link.classList.remove('active'));
-          const active = document.querySelector(`nav a[href="#${entry.target.id}"]`);
-          if (active) active.classList.add('active');
-        }
-      });
-    }, { threshold: 0.5 });
-
-    sections.forEach(section => sectionObserver.observe(section));
-  }
-
-
-  // ---- 4. SMOOTH SCROLL FOR ANCHOR LINKS ----
-  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', (e) => {
-      const target = document.querySelector(anchor.getAttribute('href'));
-      if (target) {
-        e.preventDefault();
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-    });
-  });
-
-
-  // ---- 5. CURSOR GLOW EFFECT ----
-  // Subtle golden glow that follows the cursor
-  const glow = document.createElement('div');
-  glow.style.cssText = `
-    position: fixed;
-    width: 300px;
-    height: 300px;
-    border-radius: 50%;
-    background: radial-gradient(circle, rgba(212,168,67,0.06) 0%, transparent 70%);
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    transition: left 0.12s ease, top 0.12s ease;
-    will-change: left, top;
-  `;
-  document.body.appendChild(glow);
-
-  document.addEventListener('mousemove', (e) => {
-    glow.style.left = e.clientX + 'px';
-    glow.style.top  = e.clientY + 'px';
-  });
-
-
-  // ---- 6. HERO NAME LETTER HOVER SPLIT ----
-  // Splits hero name spans into individual letters for hover effects
-  document.querySelectorAll('.hero__name span').forEach(span => {
-    const text = span.textContent.trim();
-    span.innerHTML = text.split('').map(char =>
-      char === ' '
-        ? ' '
-        : `<span class="letter" style="display:inline-block; transition: color 0.2s, transform 0.2s;">${char}</span>`
-    ).join('');
-
-    span.addEventListener('mouseover', (e) => {
-      if (e.target.classList.contains('letter')) {
-        e.target.style.color = 'var(--accent)';
-        e.target.style.transform = 'translateY(-4px)';
-      }
-    });
-
-    span.addEventListener('mouseout', (e) => {
-      if (e.target.classList.contains('letter')) {
-        e.target.style.color = '';
-        e.target.style.transform = '';
-      }
-    });
-  });
-
-
-  // ---- 7. CERT CARD TILT EFFECT ----
-  // Subtle 3D tilt on certification cards on mouse move
-  document.querySelectorAll('.cert__card').forEach(card => {
-    card.addEventListener('mousemove', (e) => {
-      const rect = card.getBoundingClientRect();
-      const x = ((e.clientX - rect.left) / rect.width  - 0.5) * 10;
-      const y = ((e.clientY - rect.top)  / rect.height - 0.5) * 10;
-      card.style.transform = `perspective(600px) rotateY(${x}deg) rotateX(${-y}deg) translateY(-4px)`;
-    });
-
-    card.addEventListener('mouseleave', () => {
-      card.style.transform = '';
-    });
-  });
-
-
-  // ---- 8. SCROLL PROGRESS BAR ----
-  // Thin gold bar at the top of the page showing scroll progress
-  const progressBar = document.createElement('div');
-  progressBar.style.cssText = `
-    position: fixed;
-    top: 0; left: 0;
-    height: 2px;
-    width: 0%;
-    background: var(--accent);
-    z-index: 10000;
-    transition: width 0.1s linear;
-  `;
-  document.body.appendChild(progressBar);
-
-  window.addEventListener('scroll', () => {
-    const scrollTop    = window.scrollY;
-    const docHeight    = document.documentElement.scrollHeight - window.innerHeight;
-    const scrollPercent = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    progressBar.style.width = scrollPercent + '%';
-  });
-
-
-  // ---- 9. YEAR RANGE COUNT-UP ANIMATION ----
-  // Counts up end year inside .edu__year when scrolled into view
-  // Handles both single years (e.g., "2025") and year ranges (e.g., "2021 — 2025")
-  document.querySelectorAll('.edu__year').forEach(el => {
-    const text = el.textContent.trim();
+// ========== PAGE LOAD INITIALIZATION ==========
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Portfolio Loading...');
     
-    // Extract the final year (handles both "2025" and "2021 — 2025")
-    const yearMatch = text.match(/\d{4}(?=\D*$)/);
-    if (!yearMatch) return;
+    initializeSkillBars();
+    initializeScrollAnimations();
+    initializeSmoothScroll();
+    initializeProjectCards();
+    initializeCountUpAnimations();
+    initializeNavigation();
+    addScrollProgress();
     
-    const finalYear = parseInt(yearMatch[0]);
-    const startYear = finalYear - 4;
-    const prefix = text.substring(0, text.lastIndexOf(finalYear));
-    let currentYear = startYear;
-    let started = false;
+    console.log('✅ Portfolio Ready!');
+});
 
-    const countObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting && !started) {
-          started = true;
-          
-          const animateYear = () => {
-            el.textContent = prefix + currentYear;
-            if (currentYear < finalYear) {
-              currentYear++;
-              setTimeout(animateYear, 80);
+// ========== SKILL BARS ANIMATION ==========
+function initializeSkillBars() {
+    const skillBars = document.querySelectorAll('.skill-fill');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const bar = entry.target;
+                const width = bar.getAttribute('data-width') || bar.style.width;
+                
+                // Animate the skill fill
+                setTimeout(() => {
+                    bar.style.animation = `none`;
+                    setTimeout(() => {
+                        bar.style.animation = `fillSkill 1.5s ease-out forwards`;
+                        bar.style.setProperty('--skill-width', width);
+                    }, 10);
+                }, 0);
+                
+                observer.unobserve(entry.target);
             }
-          };
-          
-          animateYear();
-          countObserver.unobserve(el);
-        }
-      });
+        });
+    }, { threshold: 0.3 });
+    
+    skillBars.forEach(bar => {
+        // Set initial width from parent's style or default
+        const parent = bar.parentElement;
+        const computedStyle = window.getComputedStyle(bar);
+        const width = computedStyle.width || '0%';
+        bar.setAttribute('data-width', width);
+        bar.style.width = '0%';
+        observer.observe(bar);
+    });
+}
+
+// ========== SCROLL REVEAL ANIMATIONS ==========
+function initializeScrollAnimations() {
+    const elements = document.querySelectorAll('section, .experience-item, .skill-category, .project-card, .cert-card, .education-item');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.style.opacity = '1';
+                entry.target.style.transform = 'translateY(0)';
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.1 });
+    
+    elements.forEach(element => {
+        element.style.opacity = '0';
+        element.style.transform = 'translateY(20px)';
+        element.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(element);
+    });
+}
+
+// ========== SMOOTH SCROLL ==========
+function initializeSmoothScroll() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            const href = this.getAttribute('href');
+            if (href === '#') return;
+            
+            e.preventDefault();
+            const target = document.querySelector(href);
+            
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// ========== PROJECT CARD INTERACTIONS ==========
+function initializeProjectCards() {
+    const cards = document.querySelectorAll('.project-card');
+    
+    cards.forEach(card => {
+        card.addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-10px) scale(1.02)';
+        });
+        
+        card.addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+        
+        // Add click animation
+        card.addEventListener('click', function() {
+            this.style.animation = 'pulse 0.5s ease';
+            setTimeout(() => {
+                this.style.animation = '';
+            }, 500);
+        });
+    });
+}
+
+// ========== COUNT UP ANIMATIONS ==========
+function initializeCountUpAnimations() {
+    const counters = document.querySelectorAll('.year-counter');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counter = entry.target;
+                const target = parseInt(counter.getAttribute('data-target')) || parseInt(counter.textContent);
+                const start = parseInt(counter.textContent.match(/\d+/)?.[0]) || 0;
+                
+                animateCounter(counter, start, target, 1000);
+                observer.unobserve(entry.target);
+            }
+        });
     }, { threshold: 0.5 });
+    
+    counters.forEach(counter => observer.observe(counter));
+}
 
-    countObserver.observe(el);
-  });
+function animateCounter(element, start, end, duration) {
+    const range = end - start;
+    const increment = range / (duration / 16); // 60fps
+    let current = start;
+    
+    const timer = setInterval(() => {
+        current += increment;
+        if ((increment > 0 && current >= end) || (increment < 0 && current <= end)) {
+            current = end;
+            clearInterval(timer);
+        }
+        element.textContent = Math.floor(current);
+    }, 16);
+}
 
+// ========== NAVIGATION HIGHLIGHT ==========
+function initializeNavigation() {
+    const sections = document.querySelectorAll('section');
+    
+    window.addEventListener('scroll', () => {
+        let current = '';
+        
+        sections.forEach(section => {
+            const sectionTop = section.offsetTop;
+            const sectionHeight = section.clientHeight;
+            
+            if (pageYOffset >= sectionTop - 200) {
+                current = section.getAttribute('id');
+            }
+        });
+        
+        // Update active nav item if you have navigation
+        document.querySelectorAll('nav a').forEach(link => {
+            link.classList.remove('active');
+            if (link.getAttribute('href') === '#' + current) {
+                link.classList.add('active');
+            }
+        });
+    });
+}
+
+// ========== SCROLL PROGRESS BAR ==========
+function addScrollProgress() {
+    const progressBar = document.createElement('div');
+    progressBar.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #00d98e 0%, #00e5a0 100%);
+        width: 0%;
+        z-index: 999;
+        box-shadow: 0 0 10px rgba(0, 217, 142, 0.6);
+        transition: width 0.1s linear;
+    `;
+    document.body.appendChild(progressBar);
+    
+    window.addEventListener('scroll', () => {
+        const scrollPercentage = (window.scrollY / (document.documentElement.scrollHeight - window.innerHeight)) * 100;
+        progressBar.style.width = scrollPercentage + '%';
+    });
+}
+
+// ========== BUTTON RIPPLE EFFECT ==========
+function addRippleEffect() {
+    const buttons = document.querySelectorAll('.btn');
+    
+    buttons.forEach(button => {
+        button.addEventListener('click', function(e) {
+            const ripple = document.createElement('span');
+            const rect = this.getBoundingClientRect();
+            const size = Math.max(rect.width, rect.height);
+            const x = e.clientX - rect.left - size / 2;
+            const y = e.clientY - rect.top - size / 2;
+            
+            ripple.style.cssText = `
+                position: absolute;
+                width: ${size}px;
+                height: ${size}px;
+                background: rgba(255,255,255,0.5);
+                border-radius: 50%;
+                left: ${x}px;
+                top: ${y}px;
+                animation: ripple 0.6s ease-out;
+                pointer-events: none;
+            `;
+            
+            this.style.position = 'relative';
+            this.style.overflow = 'hidden';
+            this.appendChild(ripple);
+            
+            setTimeout(() => ripple.remove(), 600);
+        });
+    });
+}
+
+// ========== DYNAMIC SKILL BARS (If using data attributes) ==========
+function updateSkillBars() {
+    const skillItems = document.querySelectorAll('.skill-item');
+    
+    skillItems.forEach(item => {
+        const percentage = item.getAttribute('data-percentage');
+        if (percentage) {
+            const skillFill = item.querySelector('.skill-fill');
+            if (skillFill) {
+                skillFill.setAttribute('data-width', percentage + '%');
+            }
+        }
+    });
+}
+
+// ========== THEME TOGGLE (Optional Dark/Light Mode) ==========
+function initializeThemeToggle() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    
+    if (prefersDark) {
+        document.body.style.filter = 'invert(0)';
+    }
+    
+    // Listen for system theme changes
+    window.matchMedia('(prefers-color-scheme: dark)').addEventListener('change', (e) => {
+        if (e.matches) {
+            console.log('System theme changed to dark');
+        } else {
+            console.log('System theme changed to light');
+        }
+    });
+}
+
+// ========== LAZY LOAD IMAGES ==========
+function initializeLazyLoading() {
+    const images = document.querySelectorAll('img[data-src]');
+    
+    const imageObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                img.src = img.getAttribute('data-src');
+                img.removeAttribute('data-src');
+                imageObserver.unobserve(img);
+            }
+        });
+    });
+    
+    images.forEach(img => imageObserver.observe(img));
+}
+
+// ========== KEYBOARD SHORTCUTS ==========
+document.addEventListener('keydown', function(e) {
+    // Ctrl + K or Cmd + K to focus search/scroll to top
+    if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Home key to scroll to top
+    if (e.key === 'Home') {
+        e.preventDefault();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // End key to scroll to bottom
+    if (e.key === 'End') {
+        e.preventDefault();
+        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: 'smooth' });
+    }
+});
+
+// ========== PERFORMANCE MONITORING ==========
+function logPerformanceMetrics() {
+    window.addEventListener('load', function() {
+        const perfData = window.performance.timing;
+        const pageLoadTime = perfData.loadEventEnd - perfData.navigationStart;
+        const connectTime = perfData.responseEnd - perfData.requestStart;
+        const renderTime = perfData.domComplete - perfData.domLoading;
+        
+        console.log('📊 Performance Metrics:');
+        console.log(`   Page Load Time: ${pageLoadTime}ms`);
+        console.log(`   Connect Time: ${connectTime}ms`);
+        console.log(`   Render Time: ${renderTime}ms`);
+    });
+}
+
+// ========== CONTACT FORM VALIDATION (if you add a form) ==========
+function validateContactForm(formData) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const phoneRegex = /^\d{10,}$/;
+    
+    if (!emailRegex.test(formData.email)) {
+        return { valid: false, message: 'Please enter a valid email' };
+    }
+    
+    if (formData.phone && !phoneRegex.test(formData.phone.replace(/\D/g, ''))) {
+        return { valid: false, message: 'Please enter a valid phone number' };
+    }
+    
+    return { valid: true, message: 'Form is valid' };
+}
+
+// ========== EXTERNAL LINK HANDLING ==========
+document.querySelectorAll('a[target="_blank"]').forEach(link => {
+    link.addEventListener('click', function(e) {
+        console.log('Opening external link:', this.href);
+        // Optional: Add tracking or other behavior
+    });
+});
+
+// ========== DOCUMENT READY LOG ==========
+console.log('%c🎯 Devika E S - Mechanical Design Engineer Portfolio', 
+    'font-size: 16px; color: #00d98e; font-weight: bold; text-shadow: 0 0 10px rgba(0,217,142,0.5)');
+console.log('%cProfessional Portfolio with Advanced Interactivity', 
+    'font-size: 12px; color: #b0b0cc;');
+
+// Initialize everything on load
+window.addEventListener('load', function() {
+    addRippleEffect();
+    initializeThemeToggle();
+    initializeLazyLoading();
+    logPerformanceMetrics();
 });
