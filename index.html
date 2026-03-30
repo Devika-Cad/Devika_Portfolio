@@ -126,40 +126,42 @@
                         <i class="fas fa-cube"></i>
                     </div>
                     <h3>3D Modeling & Design</h3>
-                    
+                    <p>Expert in creating detailed 3D models and assemblies. Proficient in SolidWorks, CATIA V5, and Fusion 360 with strong knowledge of parametric modeling and design optimization.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-ruler-combined"></i>
                     </div>
                     <h3>2D Technical Drafting</h3>
-
+                    <p>Comprehensive 2D drawing expertise with AutoCAD. Creating production-ready drawings with GD&T specifications, tolerances, and detailed manufacturing notes.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-chart-line"></i>
                     </div>
                     <h3>Structural Analysis</h3>
-                    
+                    <p>Background in FEA simulations using ANSYS. Stress analysis, optimization, and performance prediction for mechanical components and assemblies.</p>
+                </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-cogs"></i>
                     </div>
                     <h3>Mechanical Engineering</h3>
-                    
+                    <p>Strong foundation in mechanical principles, elevator systems, hydraulics, and mechanical assemblies. Understanding of manufacturing processes and design standards.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-drafting-compass"></i>
                     </div>
                     <h3>Manufacturing Design</h3>
-                    
+                    <p>Design for manufacturability (DFM) expertise. Cost optimization, material selection, and production-ready design implementation for real-world applications.</p>
                 </div>
                 <div class="service-card">
                     <div class="service-icon">
                         <i class="fas fa-project-diagram"></i>
                     </div>
                     <h3>Project Management</h3>
+                    <p>Experience with Primavera P6 for project planning and coordination. Collaborating with manufacturing teams and ensuring design feasibility throughout the development process.</p>
                     
                 </div>
             </div>
@@ -177,7 +179,7 @@
             <div class="projects-grid">
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="assets/JCB.jpeg" alt="Heavy Equipment JCB Design" loading="lazy">
+                        <img src="assets/JCB.jpeg" alt="Heavy Equipment JCB Design" loading="lazy" class="project-img" onclick="openModal(this.src)">
                     </div>
                     <div class="project-content">
                         <h3>Heavy Equipment - Wheel Loader Design</h3>
@@ -191,7 +193,7 @@
 
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="assets/SMALLJCB.jpeg" alt="Compact Skid Loader" loading="lazy">
+                        <img src="assets/SMALLJCB.jpeg" alt="Compact Skid Loader" loading="lazy" class="project-img" onclick="openModal(this.src)">
                     </div>
                     <div class="project-content">
                         <h3>Compact Skid Loader</h3>
@@ -206,7 +208,7 @@
 
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="assets/DRONE.jpeg" alt="Quadcopter UAV System" loading="lazy">
+                        <img src="assets/DRONE.jpeg" alt="Quadcopter UAV System" loading="lazy" class="project-img" onclick="openModal(this.src)">
                     </div>
                     <div class="project-content">
                         <h3>Quadcopter</h3>
@@ -221,7 +223,7 @@
 
                 <article class="project-card">
                     <div class="project-image">
-                        <img src="assets/WALLE.jpeg" alt="Autonomous Robot Unit" loading="lazy">
+                        <img src="assets/WALLE.jpeg" alt="Autonomous Robot Unit" loading="lazy" class="project-img" onclick="openModal(this.src)">
                     </div>
                     <div class="project-content">
                         <h3>Autonomous Robot Unit</h3>
@@ -281,6 +283,12 @@
             </div>
         </div>
     </section>
+
+    <!-- Image Modal -->
+    <div id="imageModal" class="modal">
+        <span class="modal-close">&times;</span>
+        <img class="modal-image" id="modalImage" src="" alt="Full size image">
+    </div>
 
     <!-- Resume Section -->
     <section class="resume" id="resume">
@@ -417,6 +425,6 @@
     </button>
 
     <!-- Scripts -->
-    <script src="script.js"></script>
+    <script src="main.js"></script>
 </body>
 </html>
